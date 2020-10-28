@@ -2,17 +2,34 @@ var express = require('express');
 var session = require("express-session");
 var path = require('path');
 var cors = require('cors');
+var multer = require('multer');
 var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var mysql = require('mysql');
+const fs = require("fs");
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var testServer = require('./routes/testserver');
-var app = express();
+const { promisify } = require('util');
 
+var app = express();
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'public/images')
+},
+filename: function (req, file, cb) {
+  cb(null, Date.now() + '-' +file.originalname )
+}
+});
+
+
+//const pipeline = promisify(require("stream").pipeline);
+
+var upload = multer({ storage: storage }).single('file');
+//const upload = multer();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -50,7 +67,7 @@ const db = mysql.createPool({
 
 //Request handler
 /*app.get('/api/get', (req,res)=>{
-    const sqlSelect = "Select * from user";
+    const sqlSelect = "Select * from user"; 
     db.query(sqlSelect,(err, result)=>{
         console.log(result);
     });
@@ -136,9 +153,125 @@ app.get("/api/get-followers", (req,res)=>{
   });
 });
 
+//get all notes
+app.get("/api/get-allnotes", (req,res)=>{
+  console.log("get all notes---"+req.query.id);
+  const id=req.query.id;
+  sqlSelect="select * from notes where user_id='"+id+"' order by date";
+  db.query(sqlSelect,(err,result)=>{
+    if (err) {
+        console.log(err);
+        res.send(null);
+    }
+    else{
+      if(result.length > 0){
+        console.log("notes-----"+result[0]['date']);
+        res.send(result);
+      }
+    }
+  });
+});
+
+//get all posts
+app.get("/api/get-allposts", (req,res)=>{
+  console.log("get all notes---"+req.query.id);
+  const id=req.query.id;
+  sqlSelect="select * from research where user_id='"+id+"' order by date";
+  db.query(sqlSelect,(err,result)=>{
+    if (err) {
+        console.log(err);
+        res.send(null);
+    }
+    else{
+      if(result.length > 0){
+        console.log("research-----"+result[0]['date']);
+        res.send(result);
+      }
+    }
+  });
+});
+
+//get all posts
+app.get("/api/explore", (req,res)=>{
+  //console.log("get all notes---"+req.query.id);
+  //const id=req.query.id;
+  sqlSelect="select * from research where privacy='public' order by related";
+  db.query(sqlSelect,(err,result)=>{
+    if (err) {
+        console.log(err);
+        res.send(null);
+    }
+    else{
+      if(result.length > 0){
+        console.log("research-----"+result[0]['date']);
+        res.send(result);
+      }
+    }
+  });
+});
+
+//get Diary
+app.get("/api/get-diary", (req,res)=>{
+  console.log("get all notes---"+req.query.id);
+  const id=req.query.id;
+  sqlSelect="select * from diary where user_id='"+id+"' order by date desc";
+  db.query(sqlSelect,(err,result)=>{
+    if (err) {
+        console.log(err);
+        res.send(null);
+    }
+    else{
+      if(result.length > 0){
+        console.log("diary-----"+result[0]['date']);
+        res.send(result);
+      }
+    }
+  });
+});
+
+//get one note
+app.get("/api/get-note", (req,res)=>{
+  console.log("get notes---"+req.query.id);
+  const id=req.query.id;
+  const user_id = req.query.user_id;
+  sqlSelect="select * from notes where id='"+id+"' and user_id='"+user_id+"' order by date";
+  db.query(sqlSelect,(err,result)=>{
+    if (err) {
+        console.log(err);
+        res.send(null);
+    }
+    else{
+      if(result.length > 0){
+        console.log("note-----"+result[0]['date']);
+        res.send(result);
+      }
+    }
+  });
+});
+
+//update note
+app.post("/api/update-note", (req,res)=>{
+  console.log("Inside update note-----"+req.query.id);
+  const id = req.query.id;
+  const title = req.body.title;
+  const date = req.body.date;
+  const data = req.body.data;
+  const privacy = req.body.privacy;
+  console.log(id+" "+title)
+  const sqlInsert = "update notes set title='"+title+"', date='"+date+"', data='"+data+"', privacy='"+privacy+"' where id="+id;
+  db.query(sqlInsert, (err,result)=>{
+      if (err) {
+          console.error('error connecting: ' + err.stack);
+          return;
+        }
+        console.log(result);
+      res.send("Data Updated");
+  });
+});
+
 
 app.get("/api/search-user", (req,res)=>{
-  let data = []
+  //let data = []
   console.log("search-user1---"+req.query.id);
   console.log("search-user2---"+req.query.follower_id);
   const id=req.query.id;
@@ -281,6 +414,125 @@ app.post("/api/follow_user", (req,res)=>{
   });
 });
 
+//view follower
+app.get("/api/view-followerprofile", (req,res)=>{
+  console.log("-----------Inside view followers------------");
+  console.log("search-user1---"+req.query.id);
+  console.log("search-user2---"+req.query.follower_id);
+  const id=req.query.id;
+  const follower_id = req.query.follower_id;
+  sqlSelect1="select * from user where id IN (select user_id from followers where user_id='"+follower_id+"' and follower_id='"+id+"' and accept_req='1')";
+  sqlSelect2="select * from research where user_id='"+follower_id+"' and privacy IN ('public','protected')";
+  db.query(sqlSelect1,(err,result)=>{
+    if (err) {
+        console.log(err);
+        res.send(null);
+    }
+    else{
+      if(result.length > 0){
+         // console.log("-----"+result[0]['id']);
+          db.query(sqlSelect2,(err,result1)=>{
+            if (err) {
+                console.log(err);
+                res.send(null);
+            }
+            else{
+              if(result1.length > 0){
+                  console.log("-----"+result[0]['id']);
+                  console.log("-----"+result1[0]['topic']);
+                  res.send({
+                    user: result,
+                    research: result1
+                  });
+              }
+              else{
+                res.send({
+                  user: result,
+                research: undefined
+              });
+              }
+            }
+          });
+      }
+      else {
+      res.send({
+        user: undefined,
+      research: undefined
+    });
+    }
+  }
+  });
+});
+
+
+//accept Request
+app.post("/api/accept-req", (req,res)=>{
+  console.log("Inside follower-----"+req.query.id+"->"+req.body.follower_id);
+  const user_id = req.query.id;
+  const follower_id = req.body.follower_id;
+  //const accept_req = false;
+  console.log(user_id+" "+follower_id)
+  const sqlInsert = "update followers set accept_req=1 where user_id='"+user_id+"' and follower_id='"+follower_id+"'";
+  db.query(sqlInsert, (err,result)=>{
+      if (err) {
+          console.error('error connecting: ' + err.stack);
+          return;
+        }
+        console.log(result);
+      res.send("Request accepted");
+  });
+});
+
+
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+  cb(null, 'public/images')
+},
+filename: function (req, file, cb) {
+  cb(null, Date.now() + '-' +file.originalname )
+}
+});
+
+var upload = multer({ storage: storage }).single('file');
+
+//upload image
+app.post("/api/upload", upload, (req, res) => {
+  var file_name = Date.now() + '-' +req.file.originalname;
+  console.log(req.body);
+  console.log(req.body.user_id+"----")
+  const user_id = req.body.user_id;
+  const topic = req.body.topic;
+  const date = req.body.date;
+  const data = req.body.data;
+  const privacy = req.body.privacy;
+  const related = req.body.related;
+     //console.log(req.body.name+"----"+file_name);
+  upload(req, res, function (err) {
+    
+         if (err instanceof multer.MulterError) {
+             //return res.status(500).json(err)
+         } else if (err) {
+             //return res.status(500).json(err)
+         }
+    //return res.status(200).send(req.file)
+
+  });
+  const img = req.file.filename;
+  console.log(user_id+"----"+req.file.filename);
+  const sqlInsert = "insert into research (user_id,topic,date,data,img,privacy,related) values (?,?,?,?,?,?,?)";
+  db.query(sqlInsert, [user_id,topic,date,data,img,privacy,related], (err,result)=>{
+      if (err) {
+          console.error('error connecting: ' + err.stack);
+          res.send("err---"+err);
+          return;
+        }
+        console.log("success----"+result);
+      res.send("research Inserted");
+  });
+
+});
+
+//user registration
 app.post("/api/insert", (req,res)=>{
     const id = req.body.id;
     const password = req.body.password;

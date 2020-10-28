@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 //import Axios from 'axios';
-import { Card, Button} from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 function Dashboard(props) {
   const [user_data, setUserData] = useState([]);
   useEffect(() => {
@@ -73,28 +73,34 @@ function Dashboard(props) {
       </Card>
       <br/>
       <a
-          href={"/create-note/" + props.user.id}
+          href={"/notes/" + props.user.id}
           className="btn btn-primary float-left"
         >
           Notes
         </a>
         <a
-          href={"/write-diary/" + props.user.id}
+          href={"/diary/" + props.user.id}
           className="btn btn-primary float-left"
         >
           Diary
         </a>
         <a
-          href={"/post-reseatch/" + props.user.id}
+          href={"/posts/" + props.user.id}
           className="btn btn-primary float-right"
         >
-          Research
+          Posts
         </a>
         <a
           href={"/view-followers/" + props.user.id}
           className="btn btn-primary float-left"
         >
           followers
+        </a>
+        <a
+          href={"/explore/" + props.user.id}
+          className="btn btn-primary float-left"
+        >
+          Explore!
         </a>
       <a
           href={"/search-user/" + props.user.id}

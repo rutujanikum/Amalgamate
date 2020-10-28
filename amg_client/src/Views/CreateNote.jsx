@@ -29,6 +29,12 @@ function CreateNote(props) {
       <div className="App">
         <div className="container">
         {props.match.params.s_user_id}
+        <a
+          href={"/notes/" + props.user.id}
+          className="btn btn-primary float-right"
+        >
+          Go Back!
+        </a>
 
         <h1>Create Notes</h1>
         <div className="form">

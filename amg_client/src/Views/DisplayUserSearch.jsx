@@ -83,7 +83,7 @@ const DisplayUsers = (props) => {
         </Card>
             {
               !user.follow &&
-              <p>You are following</p>
+              <p>You are following or reuested to follow</p>
             }
       </div>
       </div>

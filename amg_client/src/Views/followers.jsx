@@ -1,8 +1,9 @@
 import React, { useState, useEffect} from "react";
-//import Axios from 'axios';
-import { Card, CardGroup, CardColumns, Button} from 'react-bootstrap';
+import Axios from 'axios';
+import { Card, CardColumns, Button} from 'react-bootstrap';
 function Followers(props) {
   const [user_data, setUserData] = useState([]);
+  //const [follower_id, setFollower] = useState(undefined);
   useEffect(() => {
     let url = "http://localhost:9000/api/get-followers?id=" +props.match.params.id;
     async function getUserData() {
@@ -31,13 +32,13 @@ function Followers(props) {
       }
     });
   }, []);
-  /*const searchUser = () => {
-      Axios.post("http://localhost:3000/search-user",{
-        id: props.user.id, })
+  const acceptRequest = (data) => {
+      Axios.post("http://localhost:9000/api/accept-req?id="+props.match.params.id,{
+        follower_id: data, })
       .then(() => {
-        console.log("Going to search");
+        alert("Request accepted");
       });
-  };*/
+  };
 
   return (
     <div className="Panel">
@@ -64,16 +65,25 @@ function Followers(props) {
           <Card.Title></Card.Title>
           <Card.Text>
           USER ID :{userdata.follower_id}<br/>
+          
+          </Card.Text>
+          {console.log("accepted?----"+userdata.accept_req)}
           {
-          userdata.accept_req === 0 &&
-            <Button >Accept</Button>
+          userdata.accept_req === '0' &&
+            <Button className="btn btn-primary" onClick={()=>
+              {/*setFollower(userdata.follower_id)*/
+              acceptRequest(userdata.follower_id)}}>Accept</Button>
           }
           {
-          userdata.accept_req === 1 &&
+          userdata.accept_req === '1' &&
            <p>Following You</p>
           }
-
-          </Card.Text>
+          <a
+          className="btn btn-info"
+          href={"/view-followerprofile/"+props.match.params.id+"/"+userdata.follower_id}
+          >
+            View Profile
+          </a>
         </Card.Body>
       </Card>
       <br/>

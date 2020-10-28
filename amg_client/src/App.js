@@ -18,6 +18,14 @@ import CreateNote from './Views/CreateNote';
 import WriteDiary from './Views/WriteDiary';
 import Followers from './Views/followers';
 import Settings from './Views/settings';
+import DisplayNotes from './Views/display_notes';
+import EditNote from './Views/EditNote';
+import DisplayDiary from './Views/ViewDiary';
+import PostResearch from './Views/PostResearch';
+import DisplayResearch from './Views/DisplayResearch';
+import Explore from './Views/explore';
+import ViewFollowerProfile from './Views/ViewFollowerProfile';
+//import ritu from '../../server_amg/public/images/1603819993885-citigraph.png';
 
 function App() {
 
@@ -164,6 +172,87 @@ function App() {
               }}
             >
             </Route>
+
+            <Route exact path="/explore/:id"
+              render={({ match }) => {
+                return (
+                  <Explore
+                    match={match}
+                    user={user}
+                    onLogout={handleLogout}
+                  />
+                );
+              }}
+            >
+            </Route>
+
+            <Route exact path="/edit-note/:id/:note_id"
+              render={({ match }) => {
+                return (
+                  <EditNote
+                    match={match}
+                    user={user}
+                    onLogout={handleLogout}
+                  />
+                );
+              }}
+            >
+            </Route>
+
+
+            <Route exact path="/notes/:id"
+              render={({ match }) => {
+                return (
+                  <DisplayNotes
+                    match={match}
+                    user={user}
+                    onLogout={handleLogout}
+                  />
+                );
+              }}
+            >
+            </Route>  
+
+            <Route exact path="/posts/:id"
+              render={({ match }) => {
+                return (
+                  <DisplayResearch
+                    match={match}
+                    user={user}
+                    onLogout={handleLogout}
+                  />
+                );
+              }}
+            >
+            </Route>  
+
+            <Route exact path="/post-research/:id"
+              render={({ match }) => {
+                return (
+                  <PostResearch
+                    match={match}
+                    user={user}
+                    onLogout={handleLogout}
+                  />
+                );
+              }}
+            >
+            </Route>  
+
+
+            <Route exact path="/diary/:id"
+              render={({ match }) => {
+                return (
+                  <DisplayDiary
+                    match={match}
+                    user={user}
+                    onLogout={handleLogout}
+                  />
+                );
+              }}
+            >
+            </Route>  
+
             <Route exact path="/write-diary/:id"
               render={({ match }) => {
                 return (
@@ -209,6 +298,19 @@ function App() {
             render={({ match }) => {
                 return (
                   <DisplayUsers
+                    match={match}
+                    user={user}
+                    onLogout={handleLogout}
+                  />
+                );
+              }}
+              //component={DisplayUsers}
+              >
+            </Route>
+            <Route exact path="/view-followerprofile/:id/:follower_id"
+            render={({ match }) => {
+                return (
+                  <ViewFollowerProfile
                     match={match}
                     user={user}
                     onLogout={handleLogout}
