@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from "react";
-//import Axios from 'axios';
-import { Card, CardColumns} from 'react-bootstrap';
+import Axios from 'axios';
+import { Button, Card, CardColumns} from 'react-bootstrap';
 
 const DisplayNotes = (props) => {
  // const [user_data, setUserData] = useState([]);
   const [notes, setNotes] = useState([]);
+  const [noteid, setNoteId] = useState(undefined);
     useEffect(() => {
       let url = "http://localhost:9000/api/get-allnotes?id="+props.match.params.id;
       async function getUserData() {
@@ -33,6 +34,13 @@ const DisplayNotes = (props) => {
         }
       });
     }, []);
+
+    const DeleteNote = (data) => {
+      Axios.post("http://localhost:9000/api/delete-note?id="+data)
+      .then(() => {
+        alert("Note Deleted");
+      });
+  };
     
 
   return (
@@ -44,7 +52,7 @@ const DisplayNotes = (props) => {
               href="/login"
               className="btn btn-primary float-right"
             >
-              Logout
+              Dashboard
             </a>
 
             <a
@@ -69,10 +77,15 @@ const DisplayNotes = (props) => {
                     <Card.Text>
                       Date :{note.date}<br/>
                       Data : {note.data}<br/>
+                      <br/><br/>
                       <a 
-                      className="btn btn-primary"
+                      className="btn btn-info"
                       href={"/edit-note/"+props.match.params.id+"/"+note.id}
-                      >Edit</a>
+                      >Edit</a>&nbsp;&nbsp;
+                      <Button className="btn btn-danger" onClick={()=>
+                        { setNoteId(note.id)
+                          DeleteNote(note.id)
+                        }}>Delete</Button>
                     </Card.Text>
                   </Card.Body>
                 </Card>

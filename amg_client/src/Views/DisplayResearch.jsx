@@ -2,9 +2,15 @@ import React, {useState, useEffect} from "react";
 //import Axios from 'axios';
 import {Card, CardColumns, Image} from 'react-bootstrap';
 
+
 const DisplayResearch = (props) => {
  // const [user_data, setUserData] = useState([]);
   const [research, setResearch] = useState([]);
+  const [images, setImages] = useState({
+    images: {
+
+    }
+  });
     useEffect(() => {
       let url = "http://localhost:9000/api/get-allposts?id="+props.match.params.id;
       async function getResearch() {
@@ -34,8 +40,8 @@ const DisplayResearch = (props) => {
       });
     }, []);
     
-    const imageurl="../../../server_amg/public/images/";
-    //const img1="a.jpg"
+    const imageurl="../../../server_amg/public/images/a.jpg";
+    const img1=require("../../../server_amg/public/images/a.jpg");
   return (
       <div>
         <div className="container">
@@ -45,7 +51,7 @@ const DisplayResearch = (props) => {
               href="/login"
               className="btn btn-primary float-right"
             >
-              Logout
+              Dashboard
             </a>
 
             <a
@@ -57,31 +63,32 @@ const DisplayResearch = (props) => {
           
             </div>
             <br/>
-            <h1>-: Your Posts :-</h1>
+            <h1>-:Posts! :-</h1>
               <CardColumns>
               {research.map(rs =>  <div>
             
                 <Card>
+               
                   <Card.Header>
                     {rs.topic}
                   </Card.Header>
                   <Card.Body>
+                  
                     <Card.Title></Card.Title>
                     <Card.Text>
                       Date :{rs.date}<br/>
+    
                       Data : {rs.data}<br/>
                       
                     </Card.Text>
-                    {console.log("---"+imageurl+rs.img)}
-                    <img src={"../../../server_amg/public/images/"+rs.img} alt="" />
-                  <Image source={{uri: "../../../server_amg/public/images/"+rs.img}}/>
-                  </Card.Body>
+                    <Card.Img variant="top" src={img1} width="50" height="200"/>               
+                   </Card.Body>
                 </Card>
                 <br/>
                 </div>)}
               </CardColumns>
           </form><br/><br/>
-          
+       
         </div>
       </div>
     );

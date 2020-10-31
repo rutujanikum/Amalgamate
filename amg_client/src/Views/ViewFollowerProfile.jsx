@@ -51,7 +51,7 @@ function ViewFollowerProfile(props) {
             href="/login"
             className="btn btn-primary float-right"
           >
-            logout
+            Dashboard
           </a>&nbsp;
         
        

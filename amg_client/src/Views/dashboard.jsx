@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from "react";
 //import Axios from 'axios';
 import { Card } from 'react-bootstrap';
+import bg from '../../public/images/bg.jpg';
+
 function Dashboard(props) {
   const [user_data, setUserData] = useState([]);
   useEffect(() => {
@@ -40,8 +42,9 @@ function Dashboard(props) {
   };*/
 
   return (
-    <div className="Panel">
+    <div styles={{ backgroundImage:`url(${bg})` }}>
     <div className="container">
+     {console.log("Inside dashboard---"+props.user.id)}
       <form>
         <div className="form-group">
         <a
@@ -51,11 +54,20 @@ function Dashboard(props) {
             settings
           </a>&nbsp;
         
+       
+        <a
+            href={"/delete-my-account/" + props.user.id}
+            className="btn btn-danger float-right"
+          >
+            Delete Account
+          </a>&nbsp;
+        
         </div>
     
       <h1>Welcome! 
           {" "+user_data.map(userdata => userdata.fname)+" "}
           {user_data.map(userdata => userdata.lname)}</h1>
+          <img src={bg}></img>
       <Card>
         <Card.Header>
         Basic Information

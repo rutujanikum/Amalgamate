@@ -54,7 +54,7 @@ const DisplayUsers = (props) => {
             href="/login"
             className="btn btn-primary float-right"
           >
-            Logout
+            Dashboard
           </a>
         
           </div>

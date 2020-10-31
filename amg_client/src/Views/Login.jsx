@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.css';
+
 
 function Login(props) {
   const [user_id, setUID] = useState("");

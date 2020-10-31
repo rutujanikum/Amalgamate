@@ -30,6 +30,14 @@ function PostResearch(props) {
     
     return (
         <div className="PostResearch">
+            <div className="container">
+             <a
+              href="/login"
+              className="btn btn-primary float-right"
+            >
+              Dashboard
+            </a>
+            <br/><br/>
             <h1>Post Research</h1>
             <form action="#">
                
@@ -84,6 +92,7 @@ function PostResearch(props) {
               <br/>
             </form>
             <button onClick={Send}>Send</button>
+            </div>
         </div>
     );
 }

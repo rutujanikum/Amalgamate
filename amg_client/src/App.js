@@ -25,6 +25,7 @@ import PostResearch from './Views/PostResearch';
 import DisplayResearch from './Views/DisplayResearch';
 import Explore from './Views/explore';
 import ViewFollowerProfile from './Views/ViewFollowerProfile';
+import DeleteAccount from './Views/deleteAccount';
 //import ritu from '../../server_amg/public/images/1603819993885-citigraph.png';
 
 function App() {
@@ -167,6 +168,17 @@ function App() {
                     match={match}
                     user={user}
                     onLogout={handleLogout}
+                  />
+                );
+              }}
+            >
+            </Route>
+
+            <Route exact path="/delete-my-account/:id"
+              render={({ match }) => {
+                return (
+                  <DeleteAccount
+                    match={match}
                   />
                 );
               }}

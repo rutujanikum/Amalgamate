@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from "react";
 //import Axios from 'axios';
 import {Card, CardColumns, Image} from 'react-bootstrap';
+import bg from '../../public/images/research.jpeg';
 
 const DisplayResearch = (props) => {
  // const [user_data, setUserData] = useState([]);
@@ -37,7 +38,7 @@ const DisplayResearch = (props) => {
     const imageurl="../../../server_amg/public/images/";
     //const img1="a.jpg"
   return (
-      <div>
+      <div styles={{ backgroundImage:`url(${bg})` }}>
         <div className="container">
           <form>
             <div className="form-group">

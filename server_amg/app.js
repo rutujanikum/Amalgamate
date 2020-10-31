@@ -13,7 +13,9 @@ const fs = require("fs");
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var testServer = require('./routes/testserver');
-const { promisify } = require('util');
+const httpProxy = require('http-proxy');
+const proxy = httpProxy.createServer({});
+//const { promisify } = require('util');
 
 var app = express();
 var storage = multer.diskStorage({
@@ -41,6 +43,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static(path.join(__dirname, 'images')));
+//app.use(express.static(path.join(__dirname, 'public')));
+//app.use(express.static('images'));
+
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json())
 app.use(
@@ -75,9 +81,10 @@ const db = mysql.createPool({
 
 //check login status
 app.get("/api/login-status", (req, res) => {
-    console.log(req.sessionID);
+    //console.log(req.sessionID);
     console.log("Session:->"+req.session.user_id);
     if (req.session.user_id) {
+      console.log("Inside login-status iffff");
       res.json({
         status: true,
         user_id: req.session.user_id,
@@ -119,7 +126,8 @@ app.get("/api/logout", (req, res) => {
 
 app.get("/api/getUserInfo", (req,res)=>{
   console.log("++---"+req.query.id);
-  const id=req.query.id;
+  const id=req.session.user_id;
+  console.log("Inside dashboard---"+id);
   sqlSelect="select *from user where id='"+id+"'";
   db.query(sqlSelect,(err,result)=>{
     if (err) {
@@ -266,6 +274,42 @@ app.post("/api/update-note", (req,res)=>{
         }
         console.log(result);
       res.send("Data Updated");
+  });
+});
+
+
+//delete note
+app.post("/api/delete-note", (req,res)=>{
+  console.log("Inside delete note-----"+req.query.id);
+  const id = req.query.id;
+  
+  console.log(id+" deleted")
+  const sqlDelete = "delete from notes where id="+id;
+  db.query(sqlDelete, (err,result)=>{
+      if (err) {
+          console.error('error connecting: ' + err.stack);
+          return;
+        }
+        console.log(result);
+      res.send("Note Deleted");
+  });
+});
+
+//delete account
+app.post("/api/delete-account", (req,res)=>{
+  console.log("Inside delete account-----"+req.query.id);
+  const id = req.query.id;
+  
+  console.log(id+" deleted")
+  const sqlDelete = "delete from user where id="+id;
+  db.query(sqlDelete, (err,result)=>{
+      if (err) {
+          console.error('error connecting: ' + err.stack);
+          return;
+        }
+        req.session.user_id = undefined;
+        console.log(result);
+      res.send("Account Deleted");
   });
 });
 
