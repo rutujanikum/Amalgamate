@@ -104,7 +104,7 @@ function PostResearch(props) {
                
               <br/>
             
-            <button className="btn btn-outline-success my-2 my-sm-0" onClick={Send}>Send</button>
+            <button className="btn btn-outline-success my-2 my-sm-0" onClick={Send}>Submit</button>
             </div>
             </form>
             </Jumbotron>

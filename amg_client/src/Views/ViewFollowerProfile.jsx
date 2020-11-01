@@ -78,7 +78,7 @@ function ViewFollowerProfile(props) {
        
         {
             data.user_data == undefined &&
-            <p>User Not Found</p>
+            <p>You do not follow this user</p>
         }
        </div>
        <Jumbotron><h1>Posts</h1><hr/>

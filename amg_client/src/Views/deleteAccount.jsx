@@ -7,7 +7,8 @@ import {
     Switch,
     Redirect,
   } from "react-router-dom";
-import { Button} from 'react-bootstrap';
+import { Button,Card,Nav,Navbar} from 'react-bootstrap';
+import bg from '../../public/images/bg1.jpg';
 
 const deleteAccount = (props) => {
  const [delAcc, setDelete] = useState(false);
@@ -39,28 +40,47 @@ const DeleteAccount = () => {
 
   return (
       
-      <div>{
+      <div> {
           delAcc == true &&
           <Redirect to = {{ pathname: "/login" }} />
       }
         <div className="container">
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
+              href="/login"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
+            >
+              Dashboard
+            </a>
+            &nbsp;
+        </Navbar>
           <form>
             <div className="form-group">
+              <br/><br/>
+              <Card bg="secondary">
+              <Card.Header>
                 <h1>Are you Sure!!!</h1>
+                </Card.Header>
+                <Card.Body>
             <a
               href="/login"
-              className="btn btn-success"
+              className="btn btn-success my-2 my-sm-0"
             >
               No! Go back to Dashboard:)
             </a>
             &nbsp;
             <Button
-              className="btn btn-danger"
+              variant="btn btn-danger my-2 my-sm-0"
                 onClick={DeleteAccount}
             >
               Yes, Delete my account:(
             </Button>
-          
+            </Card.Body>
+            </Card>
             </div>
           
           </form>
