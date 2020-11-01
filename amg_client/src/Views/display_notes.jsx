@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
-import { Button, Card, CardColumns} from 'react-bootstrap';
+import { Button, Card, CardColumns, Nav, Navbar, Jumbotron} from 'react-bootstrap';
+import bg from '../../public/images/note3.jpg';
+
+
 
 const DisplayNotes = (props) => {
  // const [user_data, setUserData] = useState([]);
@@ -46,37 +49,44 @@ const DisplayNotes = (props) => {
   return (
       <div>
         <div className="container">
-          <form>
-            <div className="form-group">
-            <a
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
               href="/login"
-              className="btn btn-primary float-right"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
             >
               Dashboard
             </a>
-
+            &nbsp;
             <a
               href={"/create-note/"+props.match.params.id}
-              className="btn btn-primary float-right"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
             >
               Create Note
             </a>
-          
+         
+        </Navbar>
+        <Jumbotron>
+        <h1>Notes</h1>
+        </Jumbotron>
+          <form>
+            <div className="form-group">
             </div>
-            <br/>
-            <h1>-: Your notes :-</h1>
               <CardColumns>
               {notes.map(note =>  <div>
             
-                <Card>
+                <Card style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover' }}>
                   <Card.Header>
-                    {note.title}
+                   <b>{note.title}</b> 
                   </Card.Header>
                   <Card.Body>
                     <Card.Title></Card.Title>
                     <Card.Text>
-                      Date :{note.date}<br/>
-                      Data : {note.data}<br/>
+                     <b>Date :</b> {note.date}<br/>
+                     <b>Data :</b>  {note.data}<br/>
                       <br/><br/>
                       <a 
                       className="btn btn-info"

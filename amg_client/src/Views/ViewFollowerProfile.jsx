@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 //import Axios from 'axios';
-import { Card, CardColumns } from 'react-bootstrap';
+import {Card, CardColumns, Button, Navbar,Nav,Jumbotron} from 'react-bootstrap';
 function ViewFollowerProfile(props) {
     const [data, setData] = useState({
         user_data: [],
@@ -45,42 +45,43 @@ function ViewFollowerProfile(props) {
   return (
     <div className="Panel">
     <div className="container">
+    <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
+              href="/login"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
+            >
+              Dashboard
+            </a>
+            &nbsp;
+        </Navbar>
+        <Jumbotron>
+        <h1 ><b>Follower's Profile</b></h1><hr/>
+        {
+            data.user_data != undefined &&
+        <p>
+          <b>USER ID :</b> {" "+data.user_data.map(userdata => userdata.id)}<br/>
+          <b>Name :</b> {" "+data.user_data.map(userdata => userdata.fname)+" "}
+            {data.user_data.map(userdata => userdata.lname)}<br/>
+          <b>CONTACT :</b> {" "+data.user_data.map(userdata => userdata.contact_no)}<br/>
+          <b>EMAIL :</b> {" "+data.user_data.map(userdata => userdata.email)}<br/>
+          <b>INTEREST :</b> {" "+data.user_data.map(userdata => userdata.interest)}<br/>
+          <b>EDUCATION :</b> {" "+data.user_data.map(userdata => userdata.education)}
+          </p>
+        }
+        </Jumbotron> 
       <form>
         <div className="form-group">
-        <a
-            href="/login"
-            className="btn btn-primary float-right"
-          >
-            Dashboard
-          </a>&nbsp;
-        
        
         {
             data.user_data == undefined &&
-            <p>You do Not follow this user</p>
+            <p>User Not Found</p>
         }
        </div>
-         
-       {
-            data.user_data != undefined &&
-      <Card style={{width: 700}} bg="secondary" text="white">
-        <Card.Body>
-          <Card.Title>
-          {data.user_data.map(userdata => userdata.fname)+" "}{data.user_data.map(userdata => userdata.lname)}
-          </Card.Title>
-          <Card.Text>
-          USER ID : {data.user_data.map(userdata => <div>{userdata.id}</div>)}
-          CONTACT : {data.user_data.map(userdata => <div>{userdata.contact_no}</div>)}
-          EMAIL : {data.user_data.map(userdata => <div>{userdata.email}</div>)}
-          INTEREST : {data.user_data.map(userdata => <div>{userdata.interest}</div>)}
-          EDUCATION : {data.user_data.map(userdata => <div>{userdata.Education}</div>)}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-    }
-      <br/>
-        
-      <h1>-: Posts :-</h1>
+       <Jumbotron><h1>Posts</h1><hr/>
 
       {data.research != undefined &&
       
@@ -98,15 +99,14 @@ function ViewFollowerProfile(props) {
                       Date :{rs.date}<br/><br/>
                       Data : {rs.data}<br/>
                       
-                    </Card.Text>
-                    <img src={"../../../server_amg/public/images/"+rs.img} alt="" />
-                 
+                    </Card.Text>                 
                   </Card.Body>
                 </Card>
                 <br/>
                 </div>)}
               </CardColumns>
         }
+        </Jumbotron>
         </form>
     </div>
     </div>

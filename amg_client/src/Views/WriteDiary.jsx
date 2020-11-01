@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Axios from 'axios';
 //import './formcss.css';
-import { Button } from 'react-bootstrap';
+import {Card, CardColumns, Button, Navbar,Nav,Jumbotron} from 'react-bootstrap';
 
 
 function WriteDiary(props) {
@@ -26,32 +26,55 @@ function WriteDiary(props) {
 
       <div className="App">
         <div className="container">
-        {props.match.params.s_user_id}
-
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
+              href="/login"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
+            >
+              Dashboard
+            </a>
+            &nbsp;
+        </Navbar>
+        <br/>
+        <center>
+    <div className="col-sm-6 ">
+      <Jumbotron>
         <h1>Write Diary</h1>
+        <hr/>
+        <form>
+        <div className="form-group">
         <div className="form">
           <label>Title</label>
-        <input type="text" name="title" onChange={(e)=>{
+        <input type="text" name="title" className="form-control" onChange={(e)=>{
           setTitle(e.target.value)
           setUserId(props.match.params.s_user_id)
         }}>
           </input> 
-          <br/><br/>
+          <br/>
           <label>Date</label>
-        <input type="date" name="date" onChange={(e)=>{
+        <input type="date" name="date" className="form-control" onChange={(e)=>{
           setDate(e.target.value)
         }}>
           </input> 
           <br/>
         <label>Data</label>
-        <textarea type="text" name="data" onChange={(e)=>{
+        <textarea type="text" name="data" className="form-control" onChange={(e)=>{
         setData(e.target.value)
         }}>
           </textarea> 
           <br/>
-        <Button variant="primary" type="submit" onClick={submitData}>Submit</Button>
+        <Button variant="btn btn-outline-success my-2 my-sm-0" type="submit" onClick={submitData}>Submit</Button>
         <br/>
         </div>
+        </div>
+        </form>
+        </Jumbotron>
+        </div>
+        </center>
         </div>
       </div>
     );

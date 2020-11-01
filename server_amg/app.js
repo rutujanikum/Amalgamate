@@ -121,6 +121,7 @@ app.post("/api/login", (req, res) => {
 
 //user logout
 app.get("/api/logout", (req, res) => {
+      req.session.user_id = undefined;
       res.json({ status: true });    
 });
 
@@ -294,6 +295,25 @@ app.post("/api/delete-note", (req,res)=>{
       res.send("Note Deleted");
   });
 });
+
+
+//delete post
+app.post("/api/delete-post", (req,res)=>{
+  console.log("Inside delete post-----"+req.query.id);
+  const id = req.query.id;
+  
+  console.log(id+" deleted")
+  const sqlDelete = "delete from research where id="+id;
+  db.query(sqlDelete, (err,result)=>{
+      if (err) {
+          console.error('error connecting: ' + err.stack);
+          return;
+        }
+        console.log(result);
+      res.send("Post Deleted");
+  });
+});
+
 
 //delete account
 app.post("/api/delete-account", (req,res)=>{

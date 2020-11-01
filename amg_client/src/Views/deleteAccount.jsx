@@ -40,7 +40,7 @@ const DeleteAccount = () => {
   return (
       
       <div>{
-          delAcc === true &&
+          delAcc == true &&
           <Redirect to = {{ pathname: "/login" }} />
       }
         <div className="container">

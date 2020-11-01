@@ -120,16 +120,7 @@ function App() {
     return (
       <div className="App">
         <h1>{console.log("in return-------"+user.id)}</h1>
-        <nav className="navbar navbar-light bg-light">
-        <a className="navbar-brand" href="/">
-          Amalgamate
-        </a>
-        {loggedIn ? (
-          <button className="btn btn-primary" onClick={handleLogout}>
-            Logout
-          </button>
-        ) : null}
-      </nav>
+        
       <Router>
         <Switch>
           <Route exact path="/">

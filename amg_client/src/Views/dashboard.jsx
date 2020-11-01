@@ -1,6 +1,6 @@
 import React, { useState, useEffect} from "react";
 //import Axios from 'axios';
-import { Card } from 'react-bootstrap';
+import { Card, CardColumns, Nav,Navbar,Button, Jumbotron } from 'react-bootstrap';
 import bg from '../../public/images/bg.jpg';
 
 function Dashboard(props) {
@@ -42,84 +42,96 @@ function Dashboard(props) {
   };*/
 
   return (
-    <div styles={{ backgroundImage:`url(${bg})` }}>
+    
+    <div>
+      
     <div className="container">
-     {console.log("Inside dashboard---"+props.user.id)}
-      <form>
-        <div className="form-group">
-        <a
+    <Navbar bg="dark" variant="dark">
+    <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+    <Nav className="mr-auto">
+      
+    </Nav>
+    <a
             href={"/settings/" + props.user.id}
-            className="btn btn-primary float-right"
+            className="btn btn-outline-info my-2 my-sm-0 pull-right"
           >
             settings
           </a>&nbsp;
-        
-       
-        <a
-            href={"/delete-my-account/" + props.user.id}
-            className="btn btn-danger float-right"
-          >
-            Delete Account
-          </a>&nbsp;
-        
-        </div>
+    <button
+          className="btn btn-outline-info my-2 my-sm-0 pull-right"
+          onClick={(e) => {
+            e.preventDefault();
+            props.onLogout();
+          }}
+        >
+          Logout
+      </button>
+      
+  </Navbar>
     
-      <h1>Welcome! 
+
+     {console.log("Inside dashboard---"+props.user.id)}
+      <form>
+       <br/>
+       <Jumbotron style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover' }}>
+       <h1 style={{ color: 'white' }}>Welcome! 
           {" "+user_data.map(userdata => userdata.fname)+" "}
           {user_data.map(userdata => userdata.lname)}</h1>
-          <img src={bg}></img>
-      <Card>
-        <Card.Header>
-        Basic Information
-        </Card.Header>
-        <Card.Body>
-          <Card.Title></Card.Title>
-          <Card.Text>
-          USER ID : {user_data.map(userdata => <div>{userdata.id}</div>)}
-          CONTACT : {user_data.map(userdata => <div>{userdata.contact_no}</div>)}
-          EMAIL : {user_data.map(userdata => <div>{userdata.email}</div>)}
-          INTEREST : {user_data.map(userdata => <div>{userdata.interest}</div>)}
-          EDUCATION : {user_data.map(userdata => <div>{userdata.Education}</div>)}
-          </Card.Text>
-        </Card.Body>
-      </Card>
-      <br/>
-      <a
+         
+        <hr/>
+       
+       <a
           href={"/notes/" + props.user.id}
-          className="btn btn-primary float-left"
+          className="btn btn-outline-success my-2 my-sm-0"
         >
           Notes
         </a>
+        &nbsp;&nbsp;
         <a
           href={"/diary/" + props.user.id}
-          className="btn btn-primary float-left"
+          className="btn btn-outline-light my-2 my-sm-0"
         >
           Diary
         </a>
+        &nbsp;&nbsp;
         <a
           href={"/posts/" + props.user.id}
-          className="btn btn-primary float-right"
+          className="btn btn-outline-info my-2 my-sm-0"
         >
           Posts
         </a>
+        &nbsp;&nbsp;
         <a
           href={"/view-followers/" + props.user.id}
-          className="btn btn-primary float-left"
+          className="btn btn-outline-success my-2 my-sm-0"
         >
           followers
         </a>
+        &nbsp;&nbsp;
         <a
           href={"/explore/" + props.user.id}
-          className="btn btn-primary float-left"
+          className="btn btn-outline-light my-2 my-sm-0"
         >
           Explore!
         </a>
+        &nbsp;&nbsp;
       <a
           href={"/search-user/" + props.user.id}
-          className="btn btn-primary float-right"
+          className="btn btn-outline-info my-2 my-sm-0"
         >
           Search User
         </a>
+       <hr/>
+       <p style={{ color: 'white' }}>
+          <b>USER ID :</b> {" "+user_data.map(userdata => userdata.id)}<br/>
+          <b>CONTACT :</b> {" "+user_data.map(userdata => userdata.contact_no)}<br/>
+          <b>EMAIL :</b> {" "+user_data.map(userdata => userdata.email)}<br/>
+          <b>INTEREST :</b> {" "+user_data.map(userdata => userdata.interest)}<br/>
+          <b>EDUCATION :</b> {" "+user_data.map(userdata => userdata.education)}<br/>
+          </p>
+      </Jumbotron>
+
+
         </form>
     </div>
     </div>

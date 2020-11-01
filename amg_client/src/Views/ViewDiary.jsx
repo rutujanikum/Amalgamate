@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 //import Axios from 'axios';
-import { Card,} from 'react-bootstrap';
+import { Card,Navbar,Nav,Jumbotron} from 'react-bootstrap';
+import bg from '../../public/images/dbg3.jpg';
+import bg1 from '../../public/images/diarybg.jpg';
 
 const DisplayNotes = (props) => {
  // const [user_data, setUserData] = useState([]);
@@ -38,47 +40,51 @@ const DisplayNotes = (props) => {
   return (
       <div>
         <div className="container">
-          <form>
-            <div className="form-group">
-            <a
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
               href="/login"
-              className="btn btn-primary float-right"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
             >
-              Logout
+              Dashboard
             </a>
-
+            &nbsp;
             <a
-              href={"/write-diary/"+props.match.params.id}
-              className="btn btn-primary float-right"
+               href={"/write-diary/"+props.match.params.id}
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
             >
               Write Diary
             </a>
-          
-            </div>
-            <br/>
-           <br/>
-              
-              
+         
+        </Navbar>
+        <Jumbotron  style={{ backgroundImage: `url(${bg1})`, backgroundSize: 'cover' }}>
+        <h1><b><u>Dear Diary</u></b></h1>
+        </Jumbotron>
+          <form>
+            <div className="form-group">
             
-                <Card /*style={{ width: 800 }}*/>
-                  <Card.Header>
-                  <h1>-: Your Diary :-</h1>
-                  </Card.Header>
+            {diary.map(d =>  <div>
+                <Card style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover' }}>
                   <Card.Body>
                     <Card.Title></Card.Title>
                     <Card.Text>
-                    {diary.map(d =>  <div>
-                    Title: <b>{d.title}</b><br/>
-                      Date :<b>{d.date}</b><br/>
-                      {d.data}<br/><hr/><br/>
+                    
+                    <b>Title: </b>{d.title}<br/>
+                    <b>Date :</b>{d.date}<br/>
+                      {d.data}<br/>
                      
-                      </div>)}
+                     
                     </Card.Text>
                   </Card.Body>
                 </Card>
+                <hr/>
+                 </div>)}
                 <br/>
                
-              
+              </div>
           </form>
         </div>
       </div>

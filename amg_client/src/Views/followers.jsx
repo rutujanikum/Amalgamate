@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from "react";
 import Axios from 'axios';
-import { Card, CardColumns, Button} from 'react-bootstrap';
+import {Card, CardColumns, Button, Navbar,Nav,Jumbotron} from 'react-bootstrap';
+import bg from '../../public/images/followerbg.jpeg';
+
 function Followers(props) {
   const [user_data, setUserData] = useState([]);
   //const [follower_id, setFollower] = useState(undefined);
@@ -43,21 +45,27 @@ function Followers(props) {
   return (
     <div className="Panel">
     <div className="container">
-      <form>
-        <div className="form-group">
-        <a
-            href="/login"
-          className="btn btn-primary float-right"
-        >
-          Dashboard
-        </a>
-    
-        </div>
-    <br/><br/>
+    <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
+              href="/login"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
+            >
+              Dashboard
+            </a>
+            &nbsp;
+        </Navbar>
+        <Jumbotron>
+        <h1 ><b>Your followers</b></h1>
+        </Jumbotron>
+      <form>    
       <CardColumns>
        {user_data.map(userdata => <div>
            
-        <Card>
+        <Card style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover' }}>
         <Card.Header>
         Follower
         </Card.Header>
@@ -70,7 +78,7 @@ function Followers(props) {
           {console.log("accepted?----"+userdata.accept_req)}
           {
           userdata.accept_req === '0' &&
-            <Button className="btn btn-primary" onClick={()=>
+            <Button variant="btn btn-outline-info my-2 my-sm-0" onClick={()=>
               {/*setFollower(userdata.follower_id)*/
               acceptRequest(userdata.follower_id)}}>Accept</Button>
           }
@@ -79,7 +87,7 @@ function Followers(props) {
            <p>Following You</p>
           }
           <a
-          className="btn btn-info"
+          className="btn btn-outline-primary my-2 my-sm-0"
           href={"/view-followerprofile/"+props.match.params.id+"/"+userdata.follower_id}
           >
             View Profile

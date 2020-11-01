@@ -1,23 +1,34 @@
 import React, { useState } from "react";
-import 'bootstrap/dist/css/bootstrap.css';
+import {Card, CardColumns, Button, Navbar,Nav,Jumbotron} from 'react-bootstrap';
 //import {Button} from 'react-bootstrap';
 
 function SearchUser(props) {
   const [users, setUsers] = useState({
     user_id: undefined,
-    s_user_id: undefined,
+    s_user_id: undefined, 
   });
   return (
+    <div className="container">
+      <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
+              href="/login"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
+            >
+              Dashboard
+            </a>
+            &nbsp;
+        </Navbar>
+        <center>
     <div className="col-sm-6 ">
       <form>
         <div className="form-group">
-        <a
-            href="/login"
-            className="btn btn-primary float-right"
-          >
-            Logout
-          </a>
+        <Jumbotron>
         <h1>Search User by USER ID</h1>
+        <hr/>
           <label>User ID</label>
           <input
             type="text"
@@ -28,16 +39,18 @@ function SearchUser(props) {
               setUsers({ s_user_id: e.target.value, user_id: props.match.params.id});
             }}
           />
-        </div>
-            {console.log("....."+props.match.params.id)}
-        <p>Do you have an account?</p>
+          <br/>
         <a
           href={"/display-searched-user/"+users.user_id+"/"+users.s_user_id}
-          className="btn btn-primary"
+          className="btn btn-outline-info my-2 my-sm-0"
         >
          Search
         </a>
+        </Jumbotron>
+        </div>
       </form>
+    </div>
+    </center>
     </div>
   );
 }

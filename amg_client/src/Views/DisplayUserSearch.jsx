@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 import Axios from 'axios';
-import {Button, Card} from 'react-bootstrap';
+import {Card, CardColumns, Button, Navbar,Nav,Jumbotron} from 'react-bootstrap';
 
 const DisplayUsers = (props) => {
  // const [user_data, setUserData] = useState([]);
@@ -44,50 +44,52 @@ const DisplayUsers = (props) => {
    };
 
   return (
-    <div>
-      <h1>Search user{props.match.params.s_user_id}</h1>
-      <div className="Panel">
-      <div className="container">
+    <div className="container">
+       <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
+              href="/login"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
+            >
+              Dashboard
+            </a>
+            &nbsp;
+        </Navbar>
         <form>
           <div className="form-group">
-          <a
-            href="/login"
-            className="btn btn-primary float-right"
-          >
-            Dashboard
-          </a>
-        
-          </div>
-        </form>
-        <h1>Welcome! 
-            {" "+user.user_data.map(userdata => userdata.fname)+" "}
-            {user.user_data.map(userdata => userdata.lname)}</h1>
+          <Jumbotron>
+        <h1>User's Profile</h1>
         {console.log("user----"+user.user_data[0])}
-        <Card>
-          <Card.Header>
-          Basic Information
-          </Card.Header>
-          <Card.Body>
-            <Card.Title></Card.Title>
-            <Card.Text>
-            USER ID : {user.user_data.map(userdata => <div>{userdata.id}</div>)}
-            CONTACT : {user.user_data.map(userdata => <div>{userdata.contact_no}</div>)}
-            EMAIL : {user.user_data.map(userdata => <div>{userdata.email}</div>)}
-            INTEREST : {user.user_data.map(userdata => <div>{userdata.interest}</div>)}
-            EDUCATION : {user.user_data.map(userdata => <div>{userdata.Education}</div>)}
-            </Card.Text>
-            { user.follow &&
-            <Button variant="primary" type="submit" onClick={followUser} >Follow</Button>
+        <hr/>
+        {
+            user.user_data != undefined &&
+        <p>
+          <b>USER ID :</b> {" "+user.user_data.map(userdata => userdata.id)}<br/>
+          <b>Name :</b> {" "+user.user_data.map(userdata => userdata.fname)+" "}
+            {user.user_data.map(userdata => userdata.lname)}<br/>
+          <b>CONTACT :</b> {" "+user.user_data.map(userdata => userdata.contact_no)}<br/>
+          <b>EMAIL :</b> {" "+user.user_data.map(userdata => userdata.email)}<br/>
+          <b>INTEREST :</b> {" "+user.user_data.map(userdata => userdata.interest)}<br/>
+          <b>EDUCATION :</b> {" "+user.user_data.map(userdata => userdata.education)}
+          </p>
+          
+        }
+        { user.follow &&
+            <Button variant="btn btn-outline-info my-2 my-sm-0" type="submit" onClick={followUser} >Follow</Button>
             }
-          </Card.Body>
-        </Card>
             {
               !user.follow &&
               <p>You are following or reuested to follow</p>
             }
+        
+            </Jumbotron>
       </div>
+      </form>
       </div>
-      </div>
+      
     );
   }
 

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
 //import Axios from 'axios';
-import {Card, CardColumns, Image} from 'react-bootstrap';
+import {Card, CardColumns, Button, Navbar,Nav,Jumbotron} from 'react-bootstrap';
 import bg from '../../public/images/research.jpeg';
 
 const DisplayResearch = (props) => {
@@ -40,18 +40,26 @@ const DisplayResearch = (props) => {
   return (
       <div styles={{ backgroundImage:`url(${bg})` }}>
         <div className="container">
-          <form>
-            <div className="form-group">
-            <a
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
               href="/login"
-              className="btn btn-primary float-right"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
             >
               Dashboard
             </a>
-          
+            &nbsp;
+        </Navbar>
+          <form>
+            <div className="form-group">
+            
             </div>
-            <br/>
-            <h1>-: Explore Amalgamate :-</h1>
+            <Jumbotron>
+            <h1>Explore Amalgamate</h1>
+            <hr/>
               <CardColumns>
               {research.map(rs =>  <div>
             
@@ -68,13 +76,12 @@ const DisplayResearch = (props) => {
                       
                     </Card.Text>
                     {console.log("URL => "+imageurl+rs.img)}
-                    <img src={"../../../server_amg/public/images/"+rs.img} alt="" />
-                  <Image source={{uri: "../../../server_amg/public/images/"+rs.img}}/>
                   </Card.Body>
                 </Card>
                 <br/>
                 </div>)}
               </CardColumns>
+              </Jumbotron>
           </form><br/><br/>
           
         </div>

@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
-//import Axios from 'axios';
-import {Card, CardColumns, Image} from 'react-bootstrap';
-
+import Axios from 'axios';
+import {Card, CardColumns, Button, Navbar,Nav,Jumbotron} from 'react-bootstrap';
+import bg from '../../public/images/postbg.jpeg';
+import bg1 from '../../public/images/postbg.jpg';
 
 const DisplayResearch = (props) => {
  // const [user_data, setUserData] = useState([]);
@@ -39,35 +40,47 @@ const DisplayResearch = (props) => {
         }
       });
     }, []);
+
+    const DeletePost = (data) => {
+      Axios.post("http://localhost:9000/api/delete-post?id="+data)
+      .then(() => {
+        alert("Post Deleted");
+      });
+    };
     
     const imageurl="../../../server_amg/public/images/a.jpg";
     const img1=require("../../../server_amg/public/images/a.jpg");
   return (
-      <div>
+      <div >
         <div className="container">
-          <form>
-            <div className="form-group">
-            <a
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
               href="/login"
-              className="btn btn-primary float-right"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
             >
               Dashboard
             </a>
-
+            &nbsp;
             <a
-              href={"/post-research/"+props.match.params.id}
-              className="btn btn-primary float-right"
+               href={"/post-research/"+props.match.params.id}
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
             >
-              Post Research
+              New Post
             </a>
-          
-            </div>
-            <br/>
-            <h1>-:Posts! :-</h1>
+         
+        </Navbar>
+        <Jumbotron  style={{ backgroundImage: `url(${bg1})`, backgroundSize: 'cover' }}>
+        <h1 style={{ color: 'white' }}><b>Your Posts</b></h1>
+        </Jumbotron>
+          <form>
               <CardColumns>
               {research.map(rs =>  <div>
             
-                <Card>
+                <Card  style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover' }} text="white">
                
                   <Card.Header>
                     {rs.topic}
@@ -81,7 +94,10 @@ const DisplayResearch = (props) => {
                       Data : {rs.data}<br/>
                       
                     </Card.Text>
-                    <Card.Img variant="top" src={img1} width="50" height="200"/>               
+                    <Button variant="btn btn-outline-danger my-2 my-sm-0" onClick={()=>
+                        { 
+                          DeletePost(rs.id)
+                        }}>Delete</Button>
                    </Card.Body>
                 </Card>
                 <br/>

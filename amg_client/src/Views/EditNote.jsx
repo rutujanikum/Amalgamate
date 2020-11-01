@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import Axios from 'axios';
 //import './formcss.css';
-import { Button } from 'react-bootstrap';
+import {Card, CardColumns, Button, Navbar,Nav,Jumbotron} from 'react-bootstrap';
 
-
+ 
 function EditNote(props) {
     const [user_id, setUserId] = useState("");
     const [title, setTitle] = useState("");
@@ -58,36 +58,51 @@ function EditNote(props) {
       <div className="App">
         <div className="container">
         
-        <a
-          href={"/notes/" + props.match.params.id}
-          className="btn btn-primary float-right"
-        >
-          Go Back!
-        </a>
-
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
+              href="/login"
+              className="btn btn-outline-info my-2 my-sm-0 pull-right"
+            >
+              Dashboard
+            </a>
+            &nbsp;
+        </Navbar>
+        <center>
+    <div className="col-sm-6 ">
+      <Jumbotron>
         <h1>Edit Note</h1>
-        <p>Editing all fields is compulsary otherwise it will considered as empty fields</p>
+        <hr/>
+        <form>
+        <div className="form-group">
+        
         <div className="form">
+        <small id="msg" className="form-text text-muted">
+        Editing all fields is compulsary otherwise it will considered as empty fields
+          </small><br/>
         {note.map(notedata => <div>
             
             <label>Note ID</label>
-            <input type="number" name="id" defaultValue={notedata.id} disabled required></input>
+            <input type="number" name="id" className="form-control" defaultValue={notedata.id} disabled required></input>
             <br/>
           <label>Title</label>
-        <input type="text" name="title" defaultValue={notedata.title} onChange={(e)=>{
+        <input type="text" name="title" className="form-control" defaultValue={notedata.title} onChange={(e)=>{
           setTitle(e.target.value)
           setUserId(props.match.params.s_user_id)
         }} required>
           </input> 
-          <br/><br/>
+          <br/>
           <label>Date</label>
-        <input type="date" name="date" defaultValue={notedata.date} onChange={(e)=>{
+        <input type="date" name="date" className="form-control" defaultValue={notedata.date} onChange={(e)=>{
           setDate(e.target.value)
         }} required>
           </input> 
           <br/>
           <label>Privacy</label>
-        <select name="privacy" defaultValue={notedata.privacy} onChange={(e)=>{
+        <select name="privacy" className="form-control" defaultValue={notedata.privacy} onChange={(e)=>{
         setPrivacy(e.target.value)
         }} required>
             <option value="private">private</option>
@@ -96,16 +111,21 @@ function EditNote(props) {
           </select> 
           <br/>
         <label>Data</label>
-        <textarea type="text" name="data" defaultValue={notedata.data} onChange={(e)=>{
+        <textarea type="text" name="data" className="form-control" defaultValue={notedata.data} onChange={(e)=>{
         setData(e.target.value)
         }} required>
           </textarea> 
           <br/>
           </div>)}
-        <Button variant="primary" type="submit" onClick={submitData}>Edit</Button>
+        <Button variant="pribtn btn-outline-success my-2 my-sm-0mary" type="submit" onClick={submitData}>Edit</Button>
         <br/>
         </div>
         </div>
+        </form>
+        </Jumbotron>
+        </div>
+        </center>
+      </div>
       </div>
     );
   

@@ -1,17 +1,15 @@
 import React, {useState} from 'react';
 import Axios from 'axios';
 //import './formcss.css';
-import { Button } from 'react-bootstrap';
+import { Button,Navbar,Nav ,Jumbotron} from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 
 function Settings(props) {
-    const [user_id, setUserId] = useState("");
     const [acc_privacy, setPrivacy] = useState("");
     const [follow_enable, setFollowEnable] = useState("");
 
     const submitData = () => {
        Axios.post("http://localhost:9000/api/change_settings?id=" +props.match.params.id, {
-         user_id: user_id, 
          acc_privacy: acc_privacy,
          follow_enable: follow_enable,
 
@@ -24,18 +22,34 @@ function Settings(props) {
 
       <div className="App">
         <div className="container">
-        <a
-            href="/login"
-            className="btn btn-primary float-right"
-          >
-            Dashboard
-          </a>
-
+        <Navbar bg="dark" variant="dark">
+          <Navbar.Brand href="#home"> <img src={require("../../public/images/logo.png")} class="rounded-circle" width="50" height="50" alt=""/>&nbsp;Amalgamate</Navbar.Brand>
+          <Nav className="mr-auto">
+            
+          </Nav>
+          <a
+                  href={"/delete-my-account/" + props.match.params.id}
+                  className="btn btn-outline-danger my-2 my-sm-0 pull-right"
+                >
+                  Delete Account
+                </a>&nbsp;
+          <a
+                  href="/login"
+                  className="btn btn-outline-info my-2 my-sm-0 pull-right"
+                >
+                  Dashboard
+                </a>
+            
+        </Navbar>
+        <hr/>
+       <Jumbotron>
         <h1>Manage Settings</h1>
-        <div className="form">
+        </Jumbotron>
+        <center>
+        <div className="col-sm-6 ">
         <form>
         <div className="form-group">
-        <label style={{float: 'left'}} >Set Privacy(Default Public)</label>
+        <label>Set Privacy(Default Public)</label>
         <br/>
         <select 
         name="acc_privacy" 
@@ -43,7 +57,6 @@ function Settings(props) {
         className="form-control select-custom-class"
         onChange={(e)=>{
         setPrivacy(e.target.value)
-        setUserId(props.match.params.s_user_id)
         }}>
             <option value="">Select</option>
             <option value="public">public</option>
@@ -51,30 +64,33 @@ function Settings(props) {
             <option value="protected">protected</option>
           </select> 
           <br/>
-        <label style={{float: 'left'}} >Follow Enable(can people follow you? People who follow you will be able to view your public and protected data (not private data!))</label>
+        <label>Follow Enable</label>
+        <small id="msg" className="form-text text-muted">
+        can people follow you? People who follow you will be able to view your public and protected data (not private data!)
+          </small>
         <br/>
+
         <select 
         name="follow_enable" 
         style={{width: 500}}            
         className="form-control select-custom-class"
         onChange={(e)=>{
         setFollowEnable(e.target.value)
-        setUserId(props.match.params.s_user_id)
         }}>
             <option value="">Select</option>
             <option value="yes">Yes</option>
             <option value="no">No</option>
           </select> 
-          <br/>
-          <br/>
-          
-        <Button variant="primary" type="submit" onClick={submitData}>Change Settings</Button>
+        <br/>
+        <Button variant="btn btn-outline-info my-2 my-sm-0" type="submit" onClick={submitData}>Change Settings</Button>
         <br/>
         </div>
         </form>
         </div>
-        </div>
-      </div>
+        </center>
+       
+       </div>
+       </div>
     );
   
 }
