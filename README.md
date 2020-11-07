@@ -28,7 +28,8 @@
 -    The need to connect the people belonging to different backgrounds to share their knowledge and work under one umbrella. So, they can also find articles based on their interests.<br />
 
 **ER Diagram:**<br />
-![Image of er diagram]
-(
+![Image of er diagram](https://github.com/rutujanikum/Amalgamate/blob/main/er.png)
+<br />
+
 **Installation Guide :**<br />
 
