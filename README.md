@@ -34,7 +34,7 @@
 
 **Installation Guide :**<br />
 - Clone the project by  downloading the .zip file
-- Install npm in both server and client, this will install the dependencies
+- Run "npm install" in both server and client, this will install the dependencies
 - Run the server on port 9000 and client on port 3000 
 
 
