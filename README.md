@@ -32,6 +32,10 @@
 ![Image of er diagram](https://github.com/rutujanikum/Amalgamate/blob/main/er.png)
 <br />
 
+**Schema Diagram:**<br />
+![Image of schema diagram](https://github.com/rutujanikum/Amalgamate/blob/main/schema.png)
+<br />
+
 
 **Installation Guide :**<br />
 - Clone the project by  downloading the .zip file
