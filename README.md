@@ -9,8 +9,8 @@
  **This is Database Management System Course Project**<br />
 
 **Tech Stack Used**<br />
-*    NodeJS and Express for Frontend<br />
-*    React for backend<br />
+*    NodeJS and Express for Backend<br />
+*    React for Frontend<br />
 *    MySQL database<br />
 
 **Features**<br />
